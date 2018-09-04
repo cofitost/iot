@@ -37,9 +37,9 @@ router.get('/get', function(req, res, nest) {
 router.delete('/delete/:times/:station', function(req, res, next) {
 
     model.find({'times': req.params.times,'station': req.params.station}, function (err, data) {
-        console.log(data.length+'');
+        console.log('Data:'+data.length);
         if (data.length == 0){
-            res.send('data not exists',null);
+            res.send('data not exists');
         }else {
             model.deleteMany({'times': req.params.times,'station': req.params.station}, function(err) {
                 if(err)
