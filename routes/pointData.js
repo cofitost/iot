@@ -6,6 +6,7 @@ router.get('/', function(req, res, next) {
   res.send('point-data route');
 });
 
+//post data
 router.post('/post', function(req, res, next) {
     var dataModel = new model();
 
@@ -25,7 +26,8 @@ router.post('/post', function(req, res, next) {
     });
 });
 
-router.get('/get', function(req, res, nest) {
+//get all data
+router.get('/get', function(req, res, next) {
     model.find(function(err, data){
         if(err)
             res.send(err);
@@ -34,11 +36,35 @@ router.get('/get', function(req, res, nest) {
     });
 });
 
+//get one data by station and times
+router.get('/search/:times/:station', function(req, res, next) {
+    model.find({'times': req.params.times,'station': req.params.station}, function (err, data) {
+        console.log('Data:'+data.length);
+        if (!data.length){
+            res.send('data not exists');
+        }else {
+            res.json(data);
+        }
+    });
+});
+
+//update data by station and times
+router.put('/update/:times/:station', function(req, res, next){
+    model.find({'times': req.params.times, 'station': req.params.station}, function(err, data) {
+        if(!data.length){
+            res.send('data not exists');
+        }else {
+            
+        }
+    });
+});
+
+//delete data by station and times
 router.delete('/delete/:times/:station', function(req, res, next) {
 
     model.find({'times': req.params.times,'station': req.params.station}, function (err, data) {
         console.log('Data:'+data.length);
-        if (data.length == 0){
+        if (!data.length){
             res.send('data not exists');
         }else {
             model.deleteMany({'times': req.params.times,'station': req.params.station}, function(err) {

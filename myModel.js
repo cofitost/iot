@@ -9,4 +9,4 @@ var Database = new schema({
 });
 
 module.exports = mongoose.model('PointData', Database);
-mongoose.connect('mongodb://localhost:27017/PointData');
+mongoose.connect('mongodb://localhost:27017/PointData', { useNewUrlParser: true });
